@@ -9,11 +9,11 @@ public class Main {
         int[] prices = {50, 14, 80};
         Basket basket = new Basket(products, prices);
 
-        File file = new File("basket.txt");
+        File file = new File("basket.bin");
         if (file.exists()) {
             try {
-                basket = Basket.loadFromTxtFile(file);
-            } catch (IOException e) {
+                basket = Basket.loadFromBinFile(file);
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         } else {
@@ -44,7 +44,7 @@ public class Main {
             int amount = Integer.parseInt(parts[1]);
             basket.addToCart(productNum, amount);
             try {
-                basket.saveTxt(file);
+                basket.saveBin(file);
             } catch (IOException e) {
                 e.printStackTrace();
             }
