@@ -84,27 +84,13 @@ public class Basket implements Serializable {
         Basket basket = new Basket(products, prices);
         basket.amountProduct = amountProduct;
 
-        JSONObject basketJson = new JSONObject();
-        JSONArray listProduct = new JSONArray();
-        JSONArray listAmount = new JSONArray();
-        JSONArray listPrice = new JSONArray();
-        for (int i = 0; i < products.length; i++) {
-            listProduct.add(products[i]);
-            listAmount.add(amountProduct[i]);
-            listPrice.add(prices[i]);
-        }
-        basketJson.put("products", listProduct);
-        basketJson.put("amountProduct", listAmount);
-        basketJson.put("prices", listPrice);
-
-        try (FileWriter file = new FileWriter(fileJson)) {
-            file.write(basketJson.toJSONString());
-            file.flush();
-        }
-
         GsonBuilder builder = new GsonBuilder();
         Gson gson = builder.create();
-        gson.toJson(basket);
+
+        try (FileWriter file = new FileWriter(fileJson)) {
+            file.write(gson.toJson(basket));
+            file.flush();
+        }
     }
 
     public static Basket loadFromJsonFile(File fileJson) throws Exception {
